@@ -49,6 +49,7 @@ bindsym $mod+Shift+Left move left
 bindsym $mod+Shift+Down move down
 bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
+focus_follows_mouse no
 
 # container splitting
 bindsym $mod+h split h
@@ -155,15 +156,39 @@ mode "$mode_workspaces" {
 }
 bindsym $mod+w mode "$mode_workspaces"
 
+# Mode to save workspaces:
+set $mode_save_workspaces Save Workspace: [b]ase [t]erms [c]omms [m]edias [w]ww [d]ev
+mode "$mode_save_workspaces" {
+    bindsym b exec i3ctl --save workspace --workspace base, mode "default"
+    bindsym t exec i3ctl --save workspace --workspace terms, mode "default"
+    bindsym c exec i3ctl --save workspace --workspace comms, mode "default"
+    bindsym m exec i3ctl --save workspace --workspace medias, mode "default"
+    bindsym w exec i3ctl --save workspace --workspace www, mode "default"
+    bindsym d exec i3ctl --save workspace --workspace dev, mode "default"
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+bindsym $mod+Shift+w mode "$mode_save_workspaces"
+
 # Mode to start profiles:
 set $mode_profiles Start Profile: [c]itymeo [h]ome
 mode "$mode_profiles" {
-    bindsym c exec i3ctl --restore profile --profile  citymeo, mode "default"
-    bindsym h exec i3ctl --restore profile --profile  home, mode "default"
+    bindsym c exec i3ctl --restore profile --profile citymeo, mode "default"
+    bindsym h exec i3ctl --restore profile --profile home, mode "default"
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
 bindsym $mod+p mode "$mode_profiles"
+
+# Mode to save profiles:
+set $mode_save_profiles Save Profile: [c]itymeo [h]ome
+mode "$mode_save_profiles" {
+    bindsym c exec i3ctl --save profile --profile citymeo, mode "default"
+    bindsym h exec i3ctl --save profile --profile home, mode "default"
+    bindsym Escape mode "default"
+    bindsym Return mode "default"
+}
+bindsym $mod+Shift+p mode "$mode_save_profiles"
 
 # Mode for session/power control:
 set $mode_session Lock: [l]ock l[o]gout [s]witch sus[p]end [h]ibernate [r]eboot sh[u]tdown
@@ -225,7 +250,6 @@ workspace_auto_back_and_forth yes
 
 # Various shortcuts:
 bindsym $mod+l exec i3lock -t -i ~/Images/debian_9_stretch.png
-
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)

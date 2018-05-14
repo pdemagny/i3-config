@@ -18,6 +18,9 @@ function workspace_ctl {
             i3-msg "workspace ${WORKSPACE_NAME}; append_layout ~/.config/i3/workspace-$arg.json; ${WORKSPACE_ARGS}"
         elif [[ "$1" == "save" ]]; then
             i3-save-tree --workspace "${WORKSPACE_NAME}" > ~/.config/i3/raw-workspace-${arg##*:}.json
+            sed -i -re 's#(.*)// "class"#\1   "class"#g' \
+                  -re '/.*\/\/.*/ d' \
+                  -re 's#(.*"class": ".*"),#\1#g' ~/.config/i3/raw-workspace-${arg##*:}.json
         else echo "$0: workspace_ctl() you shouln't see this else, exiting just to be sure."; exit 1
         fi
 
