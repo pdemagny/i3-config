@@ -11,6 +11,7 @@ function workspace_ctl {
             "medias") WORKSPACE_NAME="4:$arg"; WORKSPACE_ARGS="exec clementine";;
             "www") WORKSPACE_NAME="5:$arg"; WORKSPACE_ARGS="exec google-chrome-stable";;
             "dev") WORKSPACE_NAME="6:$arg"; WORKSPACE_ARGS="exec atom; exec /usr/share/smartgit/bin/smartgit.sh";;
+            "virt") WORKSPACE_NAME="7:$arg"; WORKSPACE_ARGS="exec virt-manager; exec VirtualBox";;
             *) echo "$0: workspace_ctl() you shouln't see this * case, exiting just to be sure."; exit 1;;
         esac
 

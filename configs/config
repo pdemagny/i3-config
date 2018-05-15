@@ -79,7 +79,7 @@ bindsym $mod+quotedbl workspace 3:comms
 bindsym $mod+apostrophe workspace 4:medias
 bindsym $mod+parenleft workspace 5:www
 bindsym $mod+minus workspace 6:dev
-bindsym $mod+egrave workspace 7:others
+bindsym $mod+egrave workspace 7:virt
 bindsym $mod+underscore workspace 8
 bindsym $mod+ccedilla workspace 9
 bindsym $mod+agrave workspace 10
@@ -90,7 +90,7 @@ bindsym $mod+Shift+quotedbl move container to workspace 3:comms
 bindsym $mod+Shift+apostrophe move container to workspace 4:medias
 bindsym $mod+Shift+parenleft move container to workspace 5:www
 bindsym $mod+Shift+minus move container to workspace 6:dev
-bindsym $mod+Shift+egrave move container to workspace 7:others
+bindsym $mod+Shift+egrave move container to workspace 7:virt
 bindsym $mod+Shift+underscore move container to workspace 8
 bindsym $mod+Shift+ccedilla move container to workspace 9
 bindsym $mod+Shift+agrave move container to workspace 10
@@ -143,7 +143,7 @@ mode "$mode_apps" {
 bindsym $mod+a mode "$mode_apps"
 
 # Mode to start workspaces:
-set $mode_workspaces Start Workspace: [b]ase [t]erms [c]omms [m]edias [w]ww [d]ev
+set $mode_workspaces Start Workspace: [b]ase [t]erms [c]omms [m]edias [w]ww [d]ev [v]irt
 mode "$mode_workspaces" {
     bindsym b exec i3ctl --restore workspace --workspace base, mode "default"
     bindsym t exec i3ctl --restore workspace --workspace terms, mode "default"
@@ -151,13 +151,14 @@ mode "$mode_workspaces" {
     bindsym m exec i3ctl --restore workspace --workspace medias, mode "default"
     bindsym w exec i3ctl --restore workspace --workspace www, mode "default"
     bindsym d exec i3ctl --restore workspace --workspace dev, mode "default"
+    bindsym v exec i3ctl --restore workspace --workspace virt, mode "default"
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
 bindsym $mod+w mode "$mode_workspaces"
 
 # Mode to save workspaces:
-set $mode_save_workspaces Save Workspace: [b]ase [t]erms [c]omms [m]edias [w]ww [d]ev
+set $mode_save_workspaces Save Workspace: [b]ase [t]erms [c]omms [m]edias [w]ww [d]ev [v]irt
 mode "$mode_save_workspaces" {
     bindsym b exec i3ctl --save workspace --workspace base, mode "default"
     bindsym t exec i3ctl --save workspace --workspace terms, mode "default"
@@ -165,6 +166,7 @@ mode "$mode_save_workspaces" {
     bindsym m exec i3ctl --save workspace --workspace medias, mode "default"
     bindsym w exec i3ctl --save workspace --workspace www, mode "default"
     bindsym d exec i3ctl --save workspace --workspace dev, mode "default"
+    bindsym v exec i3ctl --save workspace --workspace virt, mode "default"
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
