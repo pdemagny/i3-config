@@ -1,0 +1,13 @@
+#!/bin/bash
+if [[ $# -ne 1 ]]; then echo -e "$0: invalid arguments, only one argument is allowed\npossible values are \"up\", \"down\" and mute, exiting."; exit 1; fi
+
+if [[ $1 == "up" ]]; then
+  for i in $(seq 0 9); do pactl set-sink-volume $i +5%; done
+elif [[ $1 == "down" ]]; then
+  for i in $(seq 0 9); do pactl set-sink-volume $i -5%; done
+elif [[ $1 == "mute" ]]; then
+  for i in $(seq 0 9); do pactl set-sink-mute $i toggle; done
+else
+  echo -e "${0}: invalid value ${1}\npossible values are \"up\", \"down\" and mute, exiting."
+  exit 1
+fi

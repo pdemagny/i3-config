@@ -143,8 +143,8 @@ mode "$mode_apps" {
 bindsym $mod+a mode "$mode_apps"
 
 # Mode to start workspaces:
-set $mode_workspaces Start Workspace: [b]ase [t]erms [c]omms [m]edias [w]ww [d]ev [v]irt
-mode "$mode_workspaces" {
+set $mode_restore_workspaces Start Workspace: [b]ase [t]erms [c]omms [m]edias [w]ww [d]ev [v]irt
+mode "$mode_restore_workspaces" {
     bindsym b exec i3ctl --restore workspace --workspace base, mode "default"
     bindsym t exec i3ctl --restore workspace --workspace terms, mode "default"
     bindsym c exec i3ctl --restore workspace --workspace comms, mode "default"
@@ -155,7 +155,7 @@ mode "$mode_workspaces" {
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
-bindsym $mod+w mode "$mode_workspaces"
+bindsym $mod+w mode "$mode_restore_workspaces"
 
 # Mode to save workspaces:
 set $mode_save_workspaces Save Workspace: [b]ase [t]erms [c]omms [m]edias [w]ww [d]ev [v]irt
@@ -173,14 +173,14 @@ mode "$mode_save_workspaces" {
 bindsym $mod+Shift+w mode "$mode_save_workspaces"
 
 # Mode to start profiles:
-set $mode_profiles Start Profile: [c]itymeo [h]ome
-mode "$mode_profiles" {
+set $mode_restore_profiles Start Profile: [c]itymeo [h]ome
+mode "$mode_restore_profiles" {
     bindsym c exec i3ctl --restore profile --profile citymeo, mode "default"
     bindsym h exec i3ctl --restore profile --profile home, mode "default"
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
-bindsym $mod+p mode "$mode_profiles"
+bindsym $mod+p mode "$mode_restore_profiles"
 
 # Mode to save profiles:
 set $mode_save_profiles Save Profile: [c]itymeo [h]ome
@@ -212,9 +212,9 @@ bindsym --whole-window $mod+button2 kill
 bindsym $mod+button3 floating toggle
 
 # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5% #increase sound volume
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5% #decrease sound volume
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle # mute sound
+bindsym XF86AudioLowerVolume exec --no-startup-id i3sound down
+bindsym XF86AudioRaiseVolume exec --no-startup-id i3sound up
+bindsym XF86AudioMute exec --no-startup-id i3sound mute
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
