@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 if [[ "$EUID" -ne 0 ]]; then echo "this installer should be run as root or with sudo privileges, exiting." && exit 1; fi
 
-apt-get install -y i3 lightdm nitrogen xautolock
+apt-get install -y i3 i3-wm i3lock i3status lightdm nitrogen xautolock playerctl
 
 for i in scripts/*; do
   bn=$(basename ${i})

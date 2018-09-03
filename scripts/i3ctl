@@ -1,99 +1,174 @@
 #!/bin/bash
 
-function workspace_ctl {
-    if [[ $# -lt 2 ]]; then echo -e "$0: workspace_ctl() invalid parameters\n usage: workspace_ctl ACTION WORKSPACE...N"; exit 1; fi
+function workspace_ctl() {
+	if [[ $# -lt 2 ]]; then
+		echo -e "$0: workspace_ctl() invalid parameters\n usage: workspace_ctl ACTION WORKSPACE...N"
+		exit 1
+	fi
 
-    for arg in "${@:2}"; do
-        case "$arg" in
-            "base") WORKSPACE_NAME="1:$arg"; WORKSPACE_ARGS="exec nautilus";;
-            "terms") WORKSPACE_NAME="2:$arg"; WORKSPACE_ARGS="exec i3-sensible-terminal; exec i3-sensible-terminal; exec i3-sensible-terminal";;
-            "comms") WORKSPACE_NAME="3:$arg"; WORKSPACE_ARGS="exec thunderbird; exec slack";;
-            "medias") WORKSPACE_NAME="4:$arg"; WORKSPACE_ARGS="exec clementine";;
-            "www") WORKSPACE_NAME="5:$arg"; WORKSPACE_ARGS="exec google-chrome-stable";;
-            "dev") WORKSPACE_NAME="6:$arg"; WORKSPACE_ARGS="exec atom; exec /usr/share/smartgit/bin/smartgit.sh";;
-            "virt") WORKSPACE_NAME="7:$arg"; WORKSPACE_ARGS="exec virt-manager; exec VirtualBox";;
-            *) echo "$0: workspace_ctl() you shouln't see this * case, exiting just to be sure."; exit 1;;
-        esac
+	for arg in "${@:2}"; do
+		case "$arg" in
+		"base")
+			WORKSPACE_NAME="1:$arg"
+			WORKSPACE_ARGS="exec nautilus"
+			;;
+		"terms")
+			WORKSPACE_NAME="2:$arg"
+			WORKSPACE_ARGS="exec terminator -l grid-tabbed"
+			;;
+		"comms")
+			WORKSPACE_NAME="3:$arg"
+			WORKSPACE_ARGS="exec thunderbird; exec slack"
+			;;
+		"medias")
+			WORKSPACE_NAME="4:$arg"
+			WORKSPACE_ARGS="exec clementine"
+			;;
+		"www")
+			WORKSPACE_NAME="5:$arg"
+			WORKSPACE_ARGS="exec google-chrome-stable"
+			;;
+		"dev")
+			WORKSPACE_NAME="6:$arg"
+			WORKSPACE_ARGS="exec atom; exec /usr/share/smartgit/bin/smartgit.sh"
+			;;
+		"virt")
+			WORKSPACE_NAME="7:$arg"
+			WORKSPACE_ARGS="exec virt-manager; exec VirtualBox"
+			;;
+		*)
+			echo "$0: workspace_ctl() you shouln't see this * case, exiting just to be sure."
+			exit 1
+			;;
+		esac
 
-        if [[ "$1" =~ "restore" ]]; then
-            i3-msg "workspace ${WORKSPACE_NAME}; append_layout ~/.config/i3/workspace-$arg.json; ${WORKSPACE_ARGS}"
-        elif [[ "$1" == "save" ]]; then
-            i3-save-tree --workspace "${WORKSPACE_NAME}" > ~/.config/i3/raw-workspace-${arg##*:}.json
-            sed -i -re 's#(.*)// "class"#\1   "class"#g' \
-                  -re '/.*\/\/.*/ d' \
-                  -re 's#(.*"class": ".*"),#\1#g' ~/.config/i3/raw-workspace-${arg##*:}.json
-        else echo "$0: workspace_ctl() you shouln't see this else, exiting just to be sure."; exit 1
-        fi
+		if [[ "$1" =~ "restore" ]]; then
+			i3-msg "workspace ${WORKSPACE_NAME}; append_layout ~/.config/i3/workspace-$arg.json; ${WORKSPACE_ARGS}"
+		elif [[ "$1" == "save" ]]; then
+			i3-save-tree --workspace "${WORKSPACE_NAME}" >~/.config/i3/raw-workspace-${arg##*:}.json
+			sed -i -re 's#(.*)// "class"#\1   "class"#g' \
+				-re '/.*\/\/.*/ d' \
+				-re 's#(.*"class": ".*"),#\1#g' ~/.config/i3/raw-workspace-${arg##*:}.json
+		else
+			echo "$0: workspace_ctl() you shouln't see this else, exiting just to be sure."
+			exit 1
+		fi
 
-        unset -v ${!WORKSPACE_*}
-    done
+		unset -v ${!WORKSPACE_*}
+	done
 }
 
-function profile_ctl {
-    if [[ $# -lt 2 ]]; then echo -e "$0: profile_ctl() invalid parameters\n usage: profile_ctl ACTION PROFILE...N"; exit 1; fi
+function profile_ctl() {
+	if [[ $# -lt 2 ]]; then
+		echo -e "$0: profile_ctl() invalid parameters\n usage: profile_ctl ACTION PROFILE...N"
+		exit 1
+	fi
 
-    for arg in "${@:2}"; do
-        case "$2" in
-            "citymeo") workspace_ctl "$1" "terms" "comms" "medias" "www" "dev";;
-            "home") workspace_ctl "$1" "base" "comms" "medias" "www";;
-            *) echo "$0: profile_ctl() you shouln't see this * case, exiting just to be sure."; exit 1;;
-        esac
-    done
+	for arg in "${@:2}"; do
+		case "$2" in
+		"citymeo") workspace_ctl "$1" "terms" "comms" "medias" "www" "dev" ;;
+		"home") workspace_ctl "$1" "base" "comms" "medias" "www" ;;
+		*)
+			echo "$0: profile_ctl() you shouln't see this * case, exiting just to be sure."
+			exit 1
+			;;
+		esac
+	done
 }
 
 ### main program function, where things gets done ;)
-function main {
-    if [[ $# -eq 0 ]]; then echo -e "! this program cannot run without parameter, exiting."; exit 1; fi
-    if [[ ! $(which getopt 2>&1) ]]; then echo -e "! required getopt binary missing, exiting."; exit 1; fi
+function main() {
+	if [[ $# -eq 0 ]]; then
+		echo -e "! this program cannot run without parameter, exiting."
+		exit 1
+	fi
+	if [[ ! $(which getopt 2>&1) ]]; then
+		echo -e "! required getopt binary missing, exiting."
+		exit 1
+	fi
 
-    # parsing of command-line arguments
-    if ! options=$(getopt -a -n $0 -o w:p:r:s: -l workspace:,profile:,restore:,save: -- "$@"); then
-        echo -e "$0: main() error while parsing command-line arguments, exiting."
-        exit 1
-    fi
+	# parsing of command-line arguments
+	if ! options=$(getopt -a -n $0 -o w:p:r:s: -l workspace:,profile:,restore:,save: -- "$@"); then
+		echo -e "$0: main() error while parsing command-line arguments, exiting."
+		exit 1
+	fi
 
-    eval set -- "$options"
+	eval set -- "$options"
 
-    aCOUNT=0
-    FORCE=0
-    while [[ $# -gt 0 ]]; do
-        case $1 in
-            # selection options
-            -w|--workspace)                         WORKSPACES_LIST+=("$2"); shift;;
-            -p|--profile)                           PROFILES_LIST+=("$2"); shift;;
-            # action options
-            -r|--restore)                           ((aCOUNT++)); MAIN_ACTION="restore"; MAIN_ACTION_ARG="$2"; shift;;
-            -s|--save)                              ((aCOUNT++)); MAIN_ACTION="save"; MAIN_ACTION_ARG="$2"; shift;;
-            (--) shift; break;;
-            (-*) echo -e "$0: main() error - unrecognized option $1" 1>&2; exit 1;;
-            (*) break;;
-        esac
-        shift
-    done
-    if [[ $aCOUNT -eq 0 ]]; then echo -e "$0: main() this program cannot run without an action switch, try $NAME -h for more informations."; exit 1; fi
-    if [[ $aCOUNT -ge 2 ]]; then echo -e "$0: main() this program cannot run with multiple action switches, try $NAME -h for more informations."; exit 1; fi
+	aCOUNT=0
+	FORCE=0
+	while [[ $# -gt 0 ]]; do
+		case $1 in
+		# selection options
+		-w | --workspace)
+			WORKSPACES_LIST+=("$2")
+			shift
+			;;
+		-p | --profile)
+			PROFILES_LIST+=("$2")
+			shift
+			;;
+		# action options
+		-r | --restore)
+			((aCOUNT++))
+			MAIN_ACTION="restore"
+			MAIN_ACTION_ARG="$2"
+			shift
+			;;
+		-s | --save)
+			((aCOUNT++))
+			MAIN_ACTION="save"
+			MAIN_ACTION_ARG="$2"
+			shift
+			;;
+		--)
+			shift
+			break
+			;;
+		-*)
+			echo -e "$0: main() error - unrecognized option $1" 1>&2
+			exit 1
+			;;
+		*) break ;;
+		esac
+		shift
+	done
+	if [[ $aCOUNT -eq 0 ]]; then
+		echo -e "$0: main() this program cannot run without an action switch, try $NAME -h for more informations."
+		exit 1
+	fi
+	if [[ $aCOUNT -ge 2 ]]; then
+		echo -e "$0: main() this program cannot run with multiple action switches, try $NAME -h for more informations."
+		exit 1
+	fi
 
-    # check command-line arguments values
-    if [[ ! "$MAIN_ACTION_ARG" =~ ^(workspace|ws|profile|pf)$ ]]; then echo "$0: main() invalid main action parameter: possible values are workspace|ws|profile|pf, exiting."; exit 1; fi
+	# check command-line arguments values
+	if [[ ! "$MAIN_ACTION_ARG" =~ ^(workspace|ws|profile|pf)$ ]]; then
+		echo "$0: main() invalid main action parameter: possible values are workspace|ws|profile|pf, exiting."
+		exit 1
+	fi
 
-    # finally, do what you've been told and exit gracefully ;)
-    case "$MAIN_ACTION" in
-        "restore")
-            case "$MAIN_ACTION_ARG" in
-                workspace|ws) workspace_ctl "restore" "${WORKSPACES_LIST[@]}";;
-                profile|pf) profile_ctl "restore" "${PROFILES_LIST[@]}";;
-            esac
-        ;;
-        "save")
-            case "$MAIN_ACTION_ARG" in
-                workspace|ws) workspace_ctl "save" "${WORKSPACES_LIST[@]}";;
-                profile|pf)  profile_ctl "save" "${PROFILES_LIST[@]}";;
-            esac
-        ;;
-        *) msg_error "you shouldn't see this, exiting just in case ;)"; exit 1
-    esac
+	# finally, do what you've been told and exit gracefully ;)
+	case "$MAIN_ACTION" in
+	"restore")
+		case "$MAIN_ACTION_ARG" in
+		workspace | ws) workspace_ctl "restore" "${WORKSPACES_LIST[@]}" ;;
+		profile | pf) profile_ctl "restore" "${PROFILES_LIST[@]}" ;;
+		esac
+		;;
+	"save")
+		case "$MAIN_ACTION_ARG" in
+		workspace | ws) workspace_ctl "save" "${WORKSPACES_LIST[@]}" ;;
+		profile | pf) profile_ctl "save" "${PROFILES_LIST[@]}" ;;
+		esac
+		;;
+	*)
+		msg_error "you shouldn't see this, exiting just in case ;)"
+		exit 1
+		;;
+	esac
 
-    exit 0
+	exit 0
 }
 
 main "$@"

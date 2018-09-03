@@ -123,7 +123,7 @@ bindsym $mod+r mode "resize"
 # Mode to launch applications:
 set $mode_apps Launch: [t]erminal [a]tom [s]martgit [g]oogle slac[k] [f]irefox t[h]underbird trans[m]ission [c]lementine [n]autilus s[e]cpanel [q]tpass [l]ibreoffice pa[v]ucontrol [w]orkbench
 mode "$mode_apps" {
-    bindsym t exec i3-sensible-terminal, mode "default"
+    bindsym t exec terminator -l grid, mode "default"
     bindsym f exec firefox, mode "default"
     bindsym h exec thunderbird, mode "default"
     bindsym a exec atom, mode "default"
@@ -238,7 +238,7 @@ workspace 10 output eDP-1
 assign [class="Nautilus"] 1:base
 assign [class="Transmission-gtk"] 1:base
 assign [class="Pavucontrol"] 1:base
-assign [class="Gnome-Terminal"] 2:terms
+assign [class="Terminator"] 2:terms
 assign [class="Thunderbird"] 3:comms
 assign [class="Slack"] 3:comms
 assign [class="Clementine"] 4:medias
