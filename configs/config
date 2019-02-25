@@ -137,6 +137,7 @@ mode "$mode_apps" {
     bindsym q exec qtpass, mode "default"
     bindsym l exec libreoffice, mode "default"
     bindsym v exec pavucontrol, mode "default"
+    bindsym o exec code, mode "default"
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
@@ -244,7 +245,7 @@ assign [class="Slack"] 3:comms
 assign [class="Clementine"] 4:medias
 assign [class="Google-chrome"] 5:www
 assign [class="Firefox"] 5:www
-assign [class="Atom"] 6:dev
+assign [class="Code"] 6:dev
 assign [class="SmartGit"] 6:dev
 
 bindsym $mod+x move workspace to output right
