@@ -14,7 +14,7 @@ function workspace_ctl() {
 			;;
 		"terms")
 			WORKSPACE_NAME="2:$arg"
-			WORKSPACE_ARGS="exec terminator -l grid-tabbed"
+			WORKSPACE_ARGS="exec terminator"
 			;;
 		"comms")
 			WORKSPACE_NAME="3:$arg"
@@ -30,11 +30,7 @@ function workspace_ctl() {
 			;;
 		"dev")
 			WORKSPACE_NAME="6:$arg"
-			WORKSPACE_ARGS="exec code; exec /usr/share/smartgit/bin/smartgit.sh"
-			;;
-		"virt")
-			WORKSPACE_NAME="7:$arg"
-			WORKSPACE_ARGS="exec virt-manager; exec VirtualBox"
+			WORKSPACE_ARGS="exec code; exec smartgit"
 			;;
 		*)
 			echo "$0: workspace_ctl() you shouln't see this * case, exiting just to be sure."
@@ -66,7 +62,7 @@ function profile_ctl() {
 
 	for arg in "${@:2}"; do
 		case "$2" in
-		"citymeo") workspace_ctl "$1" "terms" "comms" "medias" "www" "dev" ;;
+		"work") workspace_ctl "$1" "terms" "comms" "medias" "www" "dev" ;;
 		"home") workspace_ctl "$1" "base" "comms" "medias" "www" ;;
 		*)
 			echo "$0: profile_ctl() you shouln't see this * case, exiting just to be sure."

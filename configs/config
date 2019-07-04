@@ -79,7 +79,7 @@ bindsym $mod+quotedbl workspace 3:comms
 bindsym $mod+apostrophe workspace 4:medias
 bindsym $mod+parenleft workspace 5:www
 bindsym $mod+minus workspace 6:dev
-bindsym $mod+egrave workspace 7:virt
+bindsym $mod+egrave workspace 7
 bindsym $mod+underscore workspace 8
 bindsym $mod+ccedilla workspace 9
 bindsym $mod+agrave workspace 10
@@ -90,7 +90,7 @@ bindsym $mod+Shift+quotedbl move container to workspace 3:comms
 bindsym $mod+Shift+apostrophe move container to workspace 4:medias
 bindsym $mod+Shift+parenleft move container to workspace 5:www
 bindsym $mod+Shift+minus move container to workspace 6:dev
-bindsym $mod+Shift+egrave move container to workspace 7:virt
+bindsym $mod+Shift+egrave move container to workspace 7
 bindsym $mod+Shift+underscore move container to workspace 8
 bindsym $mod+Shift+ccedilla move container to workspace 9
 bindsym $mod+Shift+agrave move container to workspace 10
@@ -121,73 +121,67 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Mode to launch applications:
-set $mode_apps Launch: [t]erminal [a]tom [s]martgit [g]oogle slac[k] [f]irefox t[h]underbird trans[m]ission [c]lementine [n]autilus s[e]cpanel [q]tpass [l]ibreoffice pa[v]ucontrol [w]orkbench
+set $mode_apps Launch: [t]erminal vs[c]ode [s]martgit [g]oogle [f]irefox slac[k] t[h]underbird trans[m]ission cl[e]mentine [n]autilus pa[v]ucontrol
 mode "$mode_apps" {
-    bindsym t exec terminator -l grid, mode "default"
-    bindsym f exec firefox, mode "default"
-    bindsym h exec thunderbird, mode "default"
-    bindsym a exec atom, mode "default"
-    bindsym s exec /usr/share/smartgit/bin/smartgit.sh, mode "default"
-    bindsym c exec clementine, mode "default"
+    bindsym t exec terminator, mode "default"
+    bindsym c exec code, mode "default"
+    bindsym s exec smartgit, mode "default"
     bindsym g exec google-chrome-stable, mode "default"
+    bindsym f exec firefox, mode "default"
     bindsym k exec slack, mode "default"
+    bindsym h exec thunderbird, mode "default"
     bindsym m exec transmission-gtk, mode "default"
+    bindsym e exec clementine, mode "default"
     bindsym n exec nautilus, mode "default"
-    bindsym e exec secpanel, mode "default"
-    bindsym q exec qtpass, mode "default"
-    bindsym l exec libreoffice, mode "default"
     bindsym v exec pavucontrol, mode "default"
-    bindsym o exec code, mode "default"
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
 bindsym $mod+a mode "$mode_apps"
 
 # Mode to start workspaces:
-set $mode_restore_workspaces Start Workspace: [b]ase [t]erms [c]omms [m]edias [w]ww [d]ev [v]irt
+set $mode_restore_workspaces Start Workspace: [b]ase [t]erms [c]omms [m]edias [w]ww [d]ev
 mode "$mode_restore_workspaces" {
-    bindsym b exec i3ctl --restore workspace --workspace base, mode "default"
-    bindsym t exec i3ctl --restore workspace --workspace terms, mode "default"
-    bindsym c exec i3ctl --restore workspace --workspace comms, mode "default"
-    bindsym m exec i3ctl --restore workspace --workspace medias, mode "default"
-    bindsym w exec i3ctl --restore workspace --workspace www, mode "default"
-    bindsym d exec i3ctl --restore workspace --workspace dev, mode "default"
-    bindsym v exec i3ctl --restore workspace --workspace virt, mode "default"
+    bindsym b exec i3-ctl --restore workspace --workspace base, mode "default"
+    bindsym t exec i3-ctl --restore workspace --workspace terms, mode "default"
+    bindsym c exec i3-ctl --restore workspace --workspace comms, mode "default"
+    bindsym m exec i3-ctl --restore workspace --workspace medias, mode "default"
+    bindsym w exec i3-ctl --restore workspace --workspace www, mode "default"
+    bindsym d exec i3-ctl --restore workspace --workspace dev, mode "default"
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
 bindsym $mod+w mode "$mode_restore_workspaces"
 
 # Mode to save workspaces:
-set $mode_save_workspaces Save Workspace: [b]ase [t]erms [c]omms [m]edias [w]ww [d]ev [v]irt
+set $mode_save_workspaces Save Workspace: [b]ase [t]erms [c]omms [m]edias [w]ww [d]ev
 mode "$mode_save_workspaces" {
-    bindsym b exec i3ctl --save workspace --workspace base, mode "default"
-    bindsym t exec i3ctl --save workspace --workspace terms, mode "default"
-    bindsym c exec i3ctl --save workspace --workspace comms, mode "default"
-    bindsym m exec i3ctl --save workspace --workspace medias, mode "default"
-    bindsym w exec i3ctl --save workspace --workspace www, mode "default"
-    bindsym d exec i3ctl --save workspace --workspace dev, mode "default"
-    bindsym v exec i3ctl --save workspace --workspace virt, mode "default"
+    bindsym b exec i3-ctl --save workspace --workspace base, mode "default"
+    bindsym t exec i3-ctl --save workspace --workspace terms, mode "default"
+    bindsym c exec i3-ctl --save workspace --workspace comms, mode "default"
+    bindsym m exec i3-ctl --save workspace --workspace medias, mode "default"
+    bindsym w exec i3-ctl --save workspace --workspace www, mode "default"
+    bindsym d exec i3-ctl --save workspace --workspace dev, mode "default"
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
 bindsym $mod+Shift+w mode "$mode_save_workspaces"
 
 # Mode to start profiles:
-set $mode_restore_profiles Start Profile: [c]itymeo [h]ome
+set $mode_restore_profiles Start Profile: [w]ork [h]ome
 mode "$mode_restore_profiles" {
-    bindsym c exec i3ctl --restore profile --profile citymeo, mode "default"
-    bindsym h exec i3ctl --restore profile --profile home, mode "default"
+    bindsym w exec i3-ctl --restore profile --profile work, mode "default"
+    bindsym h exec i3-ctl --restore profile --profile home, mode "default"
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
 bindsym $mod+p mode "$mode_restore_profiles"
 
 # Mode to save profiles:
-set $mode_save_profiles Save Profile: [c]itymeo [h]ome
+set $mode_save_profiles Save Profile: [w]ork [h]ome
 mode "$mode_save_profiles" {
-    bindsym c exec i3ctl --save profile --profile citymeo, mode "default"
-    bindsym h exec i3ctl --save profile --profile home, mode "default"
+    bindsym w exec i3-ctl --save profile --profile work, mode "default"
+    bindsym h exec i3-ctl --save profile --profile home, mode "default"
     bindsym Escape mode "default"
     bindsym Return mode "default"
 }
@@ -196,11 +190,11 @@ bindsym $mod+Shift+p mode "$mode_save_profiles"
 # Mode for session/power control:
 set $mode_session Lock: [l]ock l[o]gout [s]witch sus[p]end [h]ibernate [r]eboot sh[u]tdown
 mode "$mode_session" {
-    bindsym l exec i3lock -t -i ~/Images/debian_9_stretch.png, mode "default"
+    bindsym l exec i3lock -t -i ~/Images/debian_10.png, mode "default"
     bindsym o exec i3-msg exit, mode "default"
     bindsym s exec dm-tool switch-to-greeter, mode "default"
-    bindsym p exec i3lock -t -i ~/Images/debian_9_stretch.png && systemctl suspend, mode "default"
-    bindsym h exec i3lock -t -i ~/Images/debian_9_stretch.png && systemctl hibernate, mode "default"
+    bindsym p exec i3lock -t -i ~/Images/debian_10.png && systemctl suspend, mode "default"
+    bindsym h exec i3lock -t -i ~/Images/debian_10.png && systemctl hibernate, mode "default"
     bindsym r exec systemctl reboot
     bindsym u exec systemctl poweroff
     bindsym Return mode "default"
@@ -213,9 +207,9 @@ bindsym --whole-window $mod+button2 kill
 bindsym $mod+button3 floating toggle
 
 # Pulse Audio controls
-bindsym XF86AudioLowerVolume exec --no-startup-id i3sound down
-bindsym XF86AudioRaiseVolume exec --no-startup-id i3sound up
-bindsym XF86AudioMute exec --no-startup-id i3sound mute
+bindsym XF86AudioLowerVolume exec --no-startup-id i3-sound down
+bindsym XF86AudioRaiseVolume exec --no-startup-id i3-sound up
+bindsym XF86AudioMute exec --no-startup-id i3-sound mute
 
 # Media player controls
 bindsym XF86AudioPlay exec playerctl play
@@ -252,7 +246,7 @@ bindsym $mod+x move workspace to output right
 workspace_auto_back_and_forth yes
 
 # Various shortcuts:
-bindsym $mod+l exec i3lock -t -i ~/Images/debian_9_stretch.png
+bindsym $mod+l exec i3lock -t -i ~/Images/debian_10.png
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
@@ -262,8 +256,3 @@ bar {
 	modifier $mod
   status_command i3status
 }
-
-# Launch applications on startup:
-exec --no-startup-id nitrogen --restore
-# This will always be run at startup:
-exec-always --no-startup-id xautolock -detectsleep -time 5 -locker "i3lock -t -i ~/Images/debian_9_stretch.png" -notify 30 -notifier "notify-send -u critical -t 10000 -- 'LOCKING screen in 30 seconds'"
