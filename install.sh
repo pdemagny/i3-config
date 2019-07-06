@@ -8,6 +8,8 @@ for i in scripts/*; do
   cp -v ${i} /usr/local/bin/ && chmod 755 /usr/local/bin/${bn} && chown root:root /usr/local/bin/${bn}
 done
 
+cp -v debian_10.png ~/.Images/
+
 if [[ -e ~/.config/i3/config ]]; then mv ~/.config/i3/config ~/.config/i3/config.bak; fi
 cp -v configs/config /etc/i3/config && chown root:root /etc/i3/config
 cp -v configs/i3status.conf /etc/i3status.conf && chown root:root /etc/i3status.conf
