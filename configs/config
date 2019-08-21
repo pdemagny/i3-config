@@ -121,7 +121,7 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 # Mode to launch applications:
-set $mode_apps Launch: [t]erminal vs[c]ode [s]martgit [g]oogle [f]irefox slac[k] t[h]underbird trans[m]ission cl[e]mentine [n]autilus pa[v]ucontrol
+set $mode_apps Launch: [t]erminal vs[c]ode [s]martgit [g]oogle [f]irefox slac[k] [d]iscord t[h]underbird trans[m]ission cl[e]mentine [n]autilus pa[v]ucontrol
 mode "$mode_apps" {
     bindsym t exec terminator, mode "default"
     bindsym c exec code, mode "default"
@@ -129,6 +129,7 @@ mode "$mode_apps" {
     bindsym g exec google-chrome-stable, mode "default"
     bindsym f exec firefox, mode "default"
     bindsym k exec slack, mode "default"
+    bindsym d exec discord, mode "default"
     bindsym h exec thunderbird, mode "default"
     bindsym m exec transmission-gtk, mode "default"
     bindsym e exec clementine, mode "default"
@@ -236,6 +237,7 @@ assign [class="Pavucontrol"] 1:base
 assign [class="Terminator"] 2:terms
 assign [class="Thunderbird"] 3:comms
 assign [class="Slack"] 3:comms
+assign [class="discord"] 3:comms
 assign [class="Clementine"] 4:medias
 assign [class="Google-chrome"] 5:www
 assign [class="Firefox"] 5:www

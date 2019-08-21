@@ -18,7 +18,7 @@ function workspace_ctl() {
 			;;
 		"comms")
 			WORKSPACE_NAME="3:$arg"
-			WORKSPACE_ARGS="exec thunderbird; exec slack"
+			WORKSPACE_ARGS="exec thunderbird; exec slack; exec discord"
 			;;
 		"medias")
 			WORKSPACE_NAME="4:$arg"
